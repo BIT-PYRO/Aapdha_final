@@ -1,0 +1,216 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:padding="16dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center">
+
+        <!-- Top Bar -->
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="12dp">
+
+            <TextView
+                android:id="@+id/tvAppName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="AAPADA SAHAYOG"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                android:textColor="@color/black"
+                android:layout_centerHorizontal="true" />
+
+            <ImageView
+                android:id="@+id/ivNotification"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@drawable/menu"
+                android:layout_alignParentEnd="true"/>
+        </RelativeLayout>
+
+        <!-- Image Slider (Placeholder) -->
+        <ImageView
+            android:id="@+id/ivSlider"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/banner"
+            android:layout_marginBottom="12dp"/>
+
+        <!-- Emergency SOS Button -->
+        <Button
+            android:id="@+id/btnEmergencySOS"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Emergency | SOS"
+            android:textStyle="bold"
+            android:backgroundTint="@color/red"
+            android:textColor="@color/white"
+            android:padding="16dp"
+            android:layout_marginBottom="16dp"/>
+
+        <!-- Contact Section -->
+        <TextView
+            android:text="Contact"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:background="@drawable/rounded_yellow_bg"
+            android:padding="8dp"
+            android:textColor="@color/black"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:layout_gravity="start"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:weightSum="4">
+
+            <Button
+                android:id="@+id/btnFireRescue"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:background="@null"
+                android:backgroundTint="@android:color/transparent"
+                android:elevation="0dp"
+                android:stateListAnimator="@null"
+                android:drawableTop="@drawable/ic_fire_rescue"
+                android:text="Fire"
+                android:textColor="@color/black"
+                android:gravity="center"
+                android:contentDescription="Fire Rescue Service"/>
+
+            <Button
+                android:id="@+id/btnAmbulance"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:background="@null"
+                android:backgroundTint="@android:color/transparent"
+                android:elevation="0dp"
+                android:stateListAnimator="@null"
+                android:drawableTop="@drawable/ic_ambulance"
+                android:text="Ambulance"
+                android:textColor="@color/black"
+                android:gravity="center"
+                android:contentDescription="Ambulance Service"/>
+
+            <Button
+                android:id="@+id/btnHospital"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:background="@null"
+                android:backgroundTint="@android:color/transparent"
+                android:elevation="0dp"
+                android:stateListAnimator="@null"
+                android:drawableTop="@drawable/ic_hospital"
+                android:text="Hospital"
+                android:textColor="@color/black"
+                android:gravity="center"
+                android:contentDescription="Hospital Service"/>
+
+            <Button
+                android:id="@+id/btnPolice"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:background="@null"
+                android:backgroundTint="@android:color/transparent"
+                android:elevation="0dp"
+                android:stateListAnimator="@null"
+                android:drawableTop="@drawable/ic_police"
+                android:text="Police"
+                android:textColor="@color/black"
+                android:gravity="center"
+                android:contentDescription="Police Service"/>
+        </LinearLayout>
+
+        <!-- Services Section -->
+        <TextView
+            android:text="Services"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:background="@drawable/rounded_yellow_bg"
+            android:padding="8dp"
+            android:textColor="@color/black"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="8dp"
+            android:layout_gravity="start"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:weightSum="4">
+
+            <Button
+                android:id="@+id/btnFoodWater"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:background="@null"
+                android:backgroundTint="@android:color/transparent"
+                android:elevation="0dp"
+                android:stateListAnimator="@null"
+                android:drawableTop="@drawable/ic_food_water"
+                android:text="Food"
+                android:textColor="@color/black"
+                android:gravity="center"
+                android:contentDescription="Food and Water Services"/>
+
+            <Button
+                android:id="@+id/btnShelter"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:background="@null"
+                android:backgroundTint="@android:color/transparent"
+                android:elevation="0dp"
+                android:stateListAnimator="@null"
+                android:drawableTop="@drawable/ic_shelter"
+                android:text="Shelter"
+                android:textColor="@color/black"
+                android:gravity="center"
+                android:contentDescription="Shelter Services"/>
+
+            <Button
+                android:id="@+id/btnRescue"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:background="@null"
+                android:backgroundTint="@android:color/transparent"
+                android:elevation="0dp"
+                android:stateListAnimator="@null"
+                android:drawableTop="@drawable/ic_rescue"
+                android:text="Rescue"
+                android:textColor="@color/black"
+                android:gravity="center"
+                android:contentDescription="Rescue Services"/>
+
+            <Button
+                android:id="@+id/btnMedical"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:background="@null"
+                android:backgroundTint="@android:color/transparent"
+                android:elevation="0dp"
+                android:stateListAnimator="@null"
+                android:drawableTop="@drawable/ic_medical"
+                android:text="Medical"
+                android:textColor="@color/black"
+                android:gravity="center"
+                android:contentDescription="Medical Services"/>
+        </LinearLayout>
+
+    </LinearLayout>
+
+</ScrollView>

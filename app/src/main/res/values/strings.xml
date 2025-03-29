@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">Aapada Sahayog</string>
+    <string name="login">Login</string>
+    <string name="emergency_sos">Emergency SOS</string>
+    <string name="news">News</string>
+    <string name="emergency_contacts">Emergency Contacts</string>
+    <string name="request_resources">Request Resources</string>
+</resources>

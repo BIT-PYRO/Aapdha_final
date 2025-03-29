@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <!-- Permissions for location access -->
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <!-- <uses-permission android:name="android.permission.CALL_PHONE"/> -->
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS"/>
+
+    <application
+        android:allowBackup="true"
+        android:fullBackupContent="@xml/backup_rules"
+        android:icon="@mipmap/ic_launcher"
+        android:label="Aapada Sahayog"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.AapadaSahayog"
+        tools:targetApi="31">
+
+        <!-- SplashActivity - Now the launcher activity -->
+        <activity
+            android:name=".SplashActivity"
+            android:exported="true"
+            android:theme="@style/Theme.SplashScreen">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <!-- MainActivity - Updated to be the home screen after splash -->
+        <activity
+            android:name=".MainActivity"
+            android:exported="true"
+            android:label="Aapada Sahayog"
+            android:theme="@style/Theme.AapadaSahayog"/>
+
+        <!-- LoginActivity -->
+        <activity
+            android:name=".LoginActivity"
+            android:exported="false"
+            android:label="Login"
+            android:theme="@style/Theme.AapadaSahayog"/>
+
+        <!-- UserDetailsActivity - Takes name, number, and password -->
+        <activity
+            android:name=".UserDetailsActivity"
+            android:exported="false"
+            android:label="User Login"
+            android:theme="@style/Theme.AapadaSahayog"/>
+
+        <!-- NewsActivity - Displays news after login -->
+        <activity
+            android:name=".NewsActivity"
+            android:exported="false"
+            android:label="News"
+            android:theme="@style/Theme.AapadaSahayog"/>
+
+        <!-- EmergencyActivity -->
+        <activity
+            android:name=".EmergencyActivity"
+            android:exported="false"
+            android:label="Emergency SOS"
+            android:theme="@style/Theme.AapadaSahayog"/>
+
+        <!-- ContactsActivity -->
+        <activity
+            android:name=".ContactsActivity"
+            android:exported="false"
+            android:label="Emergency Contacts"
+            android:theme="@style/Theme.AapadaSahayog"/>
+
+        <!-- RequestResourcesActivity -->
+        <activity
+            android:name=".RequestResourcesActivity"
+            android:exported="false"
+            android:label="Request Resources"
+            android:theme="@style/Theme.AapadaSahayog"/>
+
+    </application>
+</manifest>

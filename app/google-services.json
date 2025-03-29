@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "733992082433",
+    "firebase_url": "https://disaster-management-37f14-default-rtdb.firebaseio.com",
+    "project_id": "disaster-management-37f14",
+    "storage_bucket": "disaster-management-37f14.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:733992082433:android:bc703358fcdf87c31fb400",
+        "android_client_info": {
+          "package_name": "com.example.apadha_final"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC7VqPm7pzP6VrJXpKy-uc4GBy_LpLRePY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
