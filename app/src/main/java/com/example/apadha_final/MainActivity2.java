@@ -2,27 +2,21 @@ package com.example.apadha_final;
 
 import android.Manifest;
 import android.app.AlertDialog;
-import android.app.NotificationChannel;
-import android.app.NotificationManager;
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-import androidx.annotation.RequiresPermission;
+
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.NotificationCompat;
-import androidx.core.app.NotificationManagerCompat;
 
-public class MainActivity extends AppCompatActivity {
 
-    private static final String CHANNEL_ID = "sos_channel";
-    private static final int NOTIFICATION_ID = 1;
+
+public class MainActivity2 extends AppCompatActivity {
 
     Button emergencyButton;
     ImageButton notificationsButton, menuButton;
@@ -37,14 +31,12 @@ public class MainActivity extends AppCompatActivity {
     // Info Icons
     ImageView imgSafetyTips, imgDisasterHelpline, imgFirstAidTips, imgNGOVolunteer;
 
-    @RequiresPermission(Manifest.permission.POST_NOTIFICATIONS)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        createNotificationChannel();
 
-        // UI Bindings
+        // Core Views
         emergencyButton = findViewById(R.id.emergencyButton);
         notificationsButton = findViewById(R.id.notificationsButton);
         reportingButton = findViewById(R.id.bannerImage);
@@ -68,33 +60,43 @@ public class MainActivity extends AppCompatActivity {
         imgFirstAidTips = findViewById(R.id.imgFirstAidTips);
         imgNGOVolunteer = findViewById(R.id.imgNGOVolunteer);
 
-        // Actions
-        emergencyButton.setOnClickListener(v -> showSOSNotification());
-        notificationsButton.setOnClickListener(v -> openActivity(LoginActivity.class));
-        reportingButton.setOnClickListener(v -> openActivity(LatestReportingActivity.class));
-        menuButton.setOnClickListener(v -> openActivity(SettingsActivity.class));
-
-        // Contact popups
+        // Contact Popups
         imgFireRescue.setOnClickListener(v -> showContactDialog("Fire Rescue", "101"));
         imgAmbulance.setOnClickListener(v -> showContactDialog("Ambulance", "102"));
         imgHospital.setOnClickListener(v -> showContactDialog("Hospital", "103"));
         imgPolice.setOnClickListener(v -> showContactDialog("Police", "100"));
 
-        // Services → Login redirect
-        imgFoodWater.setOnClickListener(v -> redirectToLoginWithToast());
-        imgShelter.setOnClickListener(v -> redirectToLoginWithToast());
-        imgRescue.setOnClickListener(v -> redirectToLoginWithToast());
-        imgMedical.setOnClickListener(v -> redirectToLoginWithToast());
-
-        // Info → Open PDFs
+        // Info → PDFs
         imgSafetyTips.setOnClickListener(v -> openPDF("safety_tips.pdf"));
         imgDisasterHelpline.setOnClickListener(v -> openPDF("disaster_helpline.pdf"));
         imgFirstAidTips.setOnClickListener(v -> openPDF("first_aid.pdf"));
         imgNGOVolunteer.setOnClickListener(v -> openPDF("ngo_volunteer.pdf"));
-    }
 
-    private void openActivity(Class<?> cls) {
-        startActivity(new Intent(MainActivity.this, cls));
+        // Emergency Button → ReportActivity
+        emergencyButton.setOnClickListener(view -> {
+            startActivity(new Intent(this, ReportActivity.class));
+        });
+
+        // Reporting Banner → LatestReportingActivity
+        reportingButton.setOnClickListener(view -> {
+            startActivity(new Intent(this, LatestReportingActivity.class));
+        });
+
+        // Menu → SettingsActivity
+        menuButton.setOnClickListener(view -> {
+            startActivity(new Intent(this, SettingsActivity.class));
+        });
+
+        // Notifications Icon → LoginActivity
+        notificationsButton.setOnClickListener(view -> {
+            startActivity(new Intent(this, LoginActivity.class));
+        });
+
+        // Services → Redirect to unique activities
+        imgFoodWater.setOnClickListener(v -> startActivity(new Intent(this, FoodWaterActivity.class)));
+        imgShelter.setOnClickListener(v -> startActivity(new Intent(this, ShelterActivity.class)));
+        imgRescue.setOnClickListener(v -> startActivity(new Intent(this, RescueActivity.class)));
+        imgMedical.setOnClickListener(v -> startActivity(new Intent(this, MedicalActivity.class)));
     }
 
     private void showContactDialog(String title, String number) {
@@ -103,11 +105,6 @@ public class MainActivity extends AppCompatActivity {
                 .setMessage("Contact: " + number)
                 .setPositiveButton("Close", null)
                 .show();
-    }
-
-    private void redirectToLoginWithToast() {
-        Toast.makeText(this, "Please login first", Toast.LENGTH_SHORT).show();
-        openActivity(LoginActivity.class);
     }
 
     private void openPDF(String fileName) {
@@ -119,33 +116,5 @@ public class MainActivity extends AppCompatActivity {
         } catch (ActivityNotFoundException e) {
             Toast.makeText(this, "No PDF viewer installed", Toast.LENGTH_SHORT).show();
         }
-    }
-
-    private void createNotificationChannel() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            NotificationChannel channel = new NotificationChannel(
-                    CHANNEL_ID,
-                    "Emergency SOS Channel",
-                    NotificationManager.IMPORTANCE_HIGH
-            );
-            channel.setDescription("Channel for SOS alerts");
-
-            NotificationManager manager = getSystemService(NotificationManager.class);
-            if (manager != null) {
-                manager.createNotificationChannel(channel);
-            }
-        }
-    }
-
-    @RequiresPermission(Manifest.permission.POST_NOTIFICATIONS)
-    private void showSOSNotification() {
-        NotificationCompat.Builder builder = new NotificationCompat.Builder(this, CHANNEL_ID)
-                .setSmallIcon(R.drawable.ic_sos)
-                .setContentTitle("🚨 Emergency Alert")
-                .setContentText("Your emergency details have been sent!")
-                .setPriority(NotificationCompat.PRIORITY_HIGH)
-                .setAutoCancel(true);
-
-        NotificationManagerCompat.from(this).notify(NOTIFICATION_ID, builder.build());
     }
 }

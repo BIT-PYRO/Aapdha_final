@@ -2,6 +2,7 @@ package com.example.apadha_final;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -32,34 +33,45 @@ public class LoginActivity extends AppCompatActivity {
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                storeLoginData(); // Store data in Firebase
-                Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                String email = etEmail.getText().toString().trim();
+                String password = etPassword.getText().toString().trim();
+
+                // ✅ Email format check
+                if (!isValidEmail(email)) {
+                    Toast.makeText(LoginActivity.this, "Please enter a valid email address", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                if (password.isEmpty()) {
+                    Toast.makeText(LoginActivity.this, "Please enter your password", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                // Store login data
+                storeLoginData(email, password);
+
+                // Navigate to MainActivity2
+                Intent intent = new Intent(LoginActivity.this, MainActivity2.class);
                 startActivity(intent);
-                finish(); // Close LoginActivity so it doesn't stay in the back stack
+                finish();
             }
         });
 
         // Signup Button - Navigates to SignupActivity
         Button btnSignup = findViewById(R.id.btnSignup);
-        btnSignup.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(LoginActivity.this, SignupActivity.class);
-                startActivity(intent);
-            }
+        btnSignup.setOnClickListener(v -> {
+            Intent intent = new Intent(LoginActivity.this, SignupActivity.class);
+            startActivity(intent);
         });
     }
 
-    private void storeLoginData() {
-        String email = etEmail.getText().toString().trim();
-        String password = etPassword.getText().toString().trim();
+    // ✅ Email validation function
+    private boolean isValidEmail(String email) {
+        return Patterns.EMAIL_ADDRESS.matcher(email).matches();
+    }
 
-        if (email.isEmpty() || password.isEmpty()) {
-            Toast.makeText(this, "Please enter both email and password", Toast.LENGTH_SHORT).show();
-            return;
-        }
-
-        // Storing login data in Firebase Realtime Database
+    // Store login data in Firebase
+    private void storeLoginData(String email, String password) {
         String userId = databaseReference.push().getKey();
         databaseReference.child(userId).setValue(new UserLogin(email, password))
                 .addOnSuccessListener(aVoid -> Toast.makeText(LoginActivity.this, "Login data stored", Toast.LENGTH_SHORT).show())

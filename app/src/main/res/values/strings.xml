@@ -5,4 +5,40 @@
     <string name="news">News</string>
     <string name="emergency_contacts">Emergency Contacts</string>
     <string name="request_resources">Request Resources</string>
+
+    <!-- Status Bar -->
+    <string name="network_signal">Network Signal</string>
+    <string name="wifi_signal">WiFi Signal</string>
+    <string name="battery">Battery</string>
+
+    <!-- Header -->
+    <string name="menu">Menu</string>
+    <string name="report">Report</string>
+    <string name="back">Back</string>
+
+    <!-- Emergency Section -->
+    <string name="emergency">Emergency</string>
+    <string name="flood">Flood</string>
+    <string name="fire">Fire</string>
+    <string name="tsunami">Tsunami</string>
+    <string name="drought">Drought</string>
+    <string name="cyclones">Cyclones</string>
+    <string name="landslides">Landslides</string>
+    <string name="chemical">Chemical</string>
+    <string name="disaster">Disaster</string>
+    <string name="chemical_disaster">Chemical Disaster</string>
+    <string name="other">Other</string>
+
+    <!-- Location Section -->
+    <string name="location">Location</string>
+    <string name="state">State</string>
+    <string name="city">City</string>
+    <string name="area_pin_code">Area Pin code</string>
+
+    <!-- Upload Section -->
+    <string name="upload">Upload</string>
+    <string name="photo">Photo</string>
+    <string name="video">Video</string>
+    <string name="upload_photo">Upload photo</string>
+    <string name="upload_video">Upload video</string>
 </resources>

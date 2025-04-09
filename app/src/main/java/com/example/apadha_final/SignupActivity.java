@@ -2,106 +2,95 @@ package com.example.apadha_final;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.TextUtils;
-import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.ProgressBar;
-import android.widget.Toast;
-
-import androidx.annotation.NonNull;
+import android.widget.*;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 public class SignupActivity extends AppCompatActivity {
 
-    private EditText etEmail, etPassword;
-    private Button btnSignup;
-    private ProgressBar progressBar;
-    private FirebaseAuth mAuth;
+    private EditText firstNameInput, contactInput;
+    private Button submitButton;
+    private TextView loginLink;
+    private ImageView backButton;
+
     private DatabaseReference databaseReference;
+
+    private EditText roleInput;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signup);
 
-        etEmail = findViewById(R.id.etEmail);
-        etPassword = findViewById(R.id.etPassword);
-        btnSignup = findViewById(R.id.btnSignup);
-        progressBar = findViewById(R.id.progressBar);
+        // Initialize Firebase
+        databaseReference = FirebaseDatabase.getInstance().getReference("UserSignups");
 
-        mAuth = FirebaseAuth.getInstance();
-        databaseReference = FirebaseDatabase.getInstance().getReference("Users");
+        // Bind views
+        firstNameInput = findViewById(R.id.firstNameInput); // Using as "username"
+        contactInput = findViewById(R.id.contactInput);     // Using as "email"
+        submitButton = findViewById(R.id.submitButton);
+        loginLink = findViewById(R.id.loginLink);
+        backButton = findViewById(R.id.backButton);
 
-        btnSignup.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                registerUser();
+        roleInput = findViewById(R.id.roleInput);
+        roleInput.setOnClickListener(v -> showRolePopup());
+
+
+        // Submit: store name and email → go to ReportActivity
+        submitButton.setOnClickListener(v -> {
+            String username = firstNameInput.getText().toString().trim();
+            String email = contactInput.getText().toString().trim();
+
+            String userId = databaseReference.push().getKey();
+            SimpleUser user = new SimpleUser(username, email);
+
+            if (userId != null) {
+                databaseReference.child(userId).setValue(user);
             }
+
+            // Navigate to ReportActivity
+            startActivity(new Intent(SignupActivity.this, MainActivity2.class));
+            finish();
         });
+
+        // Login link
+        loginLink.setOnClickListener(v -> {
+            startActivity(new Intent(SignupActivity.this, LoginActivity.class));
+            finish();
+        });
+
+        backButton.setOnClickListener(v -> onBackPressed());
     }
 
-    private void registerUser() {
-        String email = etEmail.getText().toString().trim();
-        String password = etPassword.getText().toString().trim();
-
-        if (TextUtils.isEmpty(email)) {
-            etEmail.setError("Email is required");
-            return;
+    private void showRolePopup() {
+        final String[] roles = {"Citizen", "Volunteer", "NGO", "Authority"};
+        PopupMenu popup = new PopupMenu(this, roleInput);
+        for (String role : roles) {
+            popup.getMenu().add(role);
         }
-
-        if (TextUtils.isEmpty(password)) {
-            etPassword.setError("Password is required");
-            return;
-        }
-
-        if (password.length() < 6) {
-            etPassword.setError("Password must be at least 6 characters");
-            return;
-        }
-
-        progressBar.setVisibility(View.VISIBLE);
-
-        mAuth.createUserWithEmailAndPassword(email, password)
-                .addOnCompleteListener(task -> {
-                    if (task.isSuccessful()) {
-                        FirebaseUser user = mAuth.getCurrentUser();
-                        if (user != null) {
-                            String userId = user.getUid();
-                            User newUser = new User(email, userId);
-                            databaseReference.child(userId).setValue(newUser)
-                                    .addOnCompleteListener(task1 -> {
-                                        if (task1.isSuccessful()) {
-                                            Toast.makeText(SignupActivity.this, "Registration Successful!", Toast.LENGTH_SHORT).show();
-                                            startActivity(new Intent(SignupActivity.this, LoginActivity.class));
-                                            finish();
-                                        } else {
-                                            Toast.makeText(SignupActivity.this, "Failed to store user data", Toast.LENGTH_SHORT).show();
-                                        }
-                                    });
-                        }
-                    } else {
-                        Toast.makeText(SignupActivity.this, "Authentication Failed: " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
-                    }
-                    progressBar.setVisibility(View.GONE);
-                });
+        popup.setOnMenuItemClickListener(item -> {
+            roleInput.setText(item.getTitle());
+            return true;
+        });
+        popup.show();
     }
 
-    public static class User {
+
+    // Firebase model class
+    public static class SimpleUser {
+        public String username;
         public String email;
-        public String userId;
 
-        public User() {
+        public SimpleUser() {
+            // Required default constructor
         }
 
-        public User(String email, String userId) {
+        public SimpleUser(String username, String email) {
+            this.username = username;
             this.email = email;
-            this.userId = userId;
         }
     }
 }

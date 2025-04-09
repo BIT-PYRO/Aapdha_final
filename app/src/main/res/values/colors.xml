@@ -14,5 +14,17 @@
     <color name="primary_variant">#3700B3</color>
     <color name="secondary">#1B837A</color>
     <color name="splash_background_color">#5F8575</color> <!-- Adjust to match your splash image -->
+    <color name="colorPrimary">#F0A500</color>
+    <color name="colorPrimaryDark">#000000</color>
+    <color name="colorAccent">#FFEB3B</color>
+    <color name="colorBackground">#000000</color>
+    <color name="colorHeaderBackground">#1A1A1A</color>
+    <color name="colorText">#FFFFFF</color>
+    <color name="colorBottomIndicator">#FFFFFF</color>
+    <!-- Disaster Report App Colors -->
+    <color name="white_80">#CCFFFFFF</color>
+    <color name="amber_500">#F0A500</color>
+    <color name="header_background">#000000</color>
+    <color name="stone_300">#D6CCC2</color>
 
 </resources>
