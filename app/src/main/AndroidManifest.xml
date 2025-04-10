@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
-
     <!-- Permissions for location and network -->
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
@@ -9,9 +8,10 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
     <uses-permission android:name="android.permission.CAMERA" />
-    <uses-feature android:name="android.hardware.camera" android:required="false" />
 
-
+    <uses-feature
+        android:name="android.hardware.camera"
+        android:required="false" />
 
     <application
         android:allowBackup="true"
@@ -22,102 +22,94 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AapadaSahayog"
         tools:targetApi="31">
-
-        <!-- Splash screen as launcher -->
+        <activity
+            android:name=".admin_reports"
+            android:exported="false" />
+        <activity
+            android:name=".admin_resource"
+            android:exported="false" />
+        <activity
+            android:name=".admin_live"
+            android:exported="false" />
+        <activity
+            android:name=".admin_profile"
+            android:exported="false" />
+        <activity
+            android:name=".admin_setting"
+            android:exported="false" />
+        <activity
+            android:name=".admin_main"
+            android:exported="false" /> <!-- Splash screen as launcher -->
         <activity
             android:name=".SplashActivity"
             android:exported="true"
             android:theme="@style/Theme.SplashScreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity>
-
-        <!-- Main Home Screen -->
+        </activity> <!-- Main Home Screen -->
         <activity
             android:name=".MainActivity"
             android:exported="true"
             android:label="Aapada Sahayog"
-            android:theme="@style/Theme.AapadaSahayog" />
-
-        <!-- Settings page (for menu button) -->
+            android:theme="@style/Theme.AapadaSahayog" /> <!-- Settings page (for menu button) -->
         <activity
             android:name=".SettingsActivity"
             android:exported="false"
             android:label="Settings"
-            android:theme="@style/Theme.AapadaSahayog" />
-
-        <!-- Login page -->
+            android:theme="@style/Theme.AapadaSahayog" /> <!-- Login page -->
         <activity
             android:name=".LoginActivity"
             android:exported="false"
             android:label="Login"
-            android:theme="@style/Theme.AapadaSahayog" />
-
-        <!-- Signup page -->
+            android:theme="@style/Theme.AapadaSahayog" /> <!-- Signup page -->
         <activity
             android:name=".SignupActivity"
             android:exported="false"
             android:label="Signup"
-            android:theme="@style/Theme.AapadaSahayog" />
-
-        <!-- User details collection -->
+            android:theme="@style/Theme.AapadaSahayog" /> <!-- User details collection -->
         <activity
             android:name=".UserDetailsActivity"
             android:exported="false"
             android:label="User Login"
-            android:theme="@style/Theme.AapadaSahayog" />
-
-        <!-- News after login -->
+            android:theme="@style/Theme.AapadaSahayog" /> <!-- News after login -->
         <activity
             android:name=".NewsActivity"
             android:exported="false"
             android:label="News"
-            android:theme="@style/Theme.AapadaSahayog" />
-
-        <!-- Emergency SOS screen -->
+            android:theme="@style/Theme.AapadaSahayog" /> <!-- Emergency SOS screen -->
         <activity
             android:name=".EmergencyActivity"
             android:exported="false"
             android:label="Emergency SOS"
-            android:theme="@style/Theme.AapadaSahayog" />
-
-        <!-- Contacts screen -->
+            android:theme="@style/Theme.AapadaSahayog" /> <!-- Contacts screen -->
         <activity
             android:name=".ContactsActivity"
             android:exported="false"
             android:label="Emergency Contacts"
-            android:theme="@style/Theme.AapadaSahayog" />
-
-        <!-- Resource request screen -->
+            android:theme="@style/Theme.AapadaSahayog" /> <!-- Resource request screen -->
         <activity
             android:name=".RequestResourcesActivity"
             android:exported="false"
             android:label="Request Resources"
-            android:theme="@style/Theme.AapadaSahayog" />
-
-        <!-- Latest reporting activity -->
+            android:theme="@style/Theme.AapadaSahayog" /> <!-- Latest reporting activity -->
         <activity
             android:name=".LatestReportingActivity"
             android:exported="false"
             android:label="Latest Report"
-            android:theme="@style/Theme.AapadaSahayog" />
-
-        <!-- Additional report activity -->
+            android:theme="@style/Theme.AapadaSahayog" /> <!-- Additional report activity -->
         <activity
             android:name=".ReportActivity"
             android:exported="false"
             android:label="Additional Report"
-            android:theme="@style/Theme.AapadaSahayog" />
-
-        <!-- ✅ Alternate MainActivity with reporting page trigger -->
+            android:theme="@style/Theme.AapadaSahayog" /> <!-- ✅ Alternate MainActivity with reporting page trigger -->
         <activity
             android:name=".MainActivity2"
             android:exported="true"
             android:label="Aapada Sahayog (Report Mode)"
             android:theme="@style/Theme.AapadaSahayog" />
-
 
         <provider
             android:name="androidx.core.content.FileProvider"
@@ -128,8 +120,6 @@
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/file_paths" />
         </provider>
-
-
     </application>
 
 </manifest>

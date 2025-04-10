@@ -8,6 +8,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
+
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -16,19 +17,20 @@ public class LoginActivity extends AppCompatActivity {
     private EditText etEmail, etPassword;
     private DatabaseReference databaseReference;
 
+    // ✅ Hardcoded admin credentials
+    private final String ADMIN_EMAIL = "admin@gmail.com";
+    private final String ADMIN_PASSWORD = "123AS";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        // Initialize Firebase Realtime Database reference
         databaseReference = FirebaseDatabase.getInstance().getReference("UserLogins");
 
-        // Input Fields
         etEmail = findViewById(R.id.etEmail);
         etPassword = findViewById(R.id.etPassword);
 
-        // Login Button - Navigates to MainActivity
         Button btnLogin = findViewById(R.id.btnLogin);
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -36,7 +38,7 @@ public class LoginActivity extends AppCompatActivity {
                 String email = etEmail.getText().toString().trim();
                 String password = etPassword.getText().toString().trim();
 
-                // ✅ Email format check
+                // Validate input
                 if (!isValidEmail(email)) {
                     Toast.makeText(LoginActivity.this, "Please enter a valid email address", Toast.LENGTH_SHORT).show();
                     return;
@@ -47,7 +49,16 @@ public class LoginActivity extends AppCompatActivity {
                     return;
                 }
 
-                // Store login data
+                // ✅ Check if admin login
+                if (email.equals(ADMIN_EMAIL) && password.equals(ADMIN_PASSWORD)) {
+                    Toast.makeText(LoginActivity.this, "Welcome Admin!", Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(LoginActivity.this, admin_main.class);
+                    startActivity(intent);
+                    finish();
+                    return;
+                }
+
+                // Store login data for regular users
                 storeLoginData(email, password);
 
                 // Navigate to MainActivity2
@@ -57,7 +68,6 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
-        // Signup Button - Navigates to SignupActivity
         Button btnSignup = findViewById(R.id.btnSignup);
         btnSignup.setOnClickListener(v -> {
             Intent intent = new Intent(LoginActivity.this, SignupActivity.class);
@@ -65,12 +75,10 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
-    // ✅ Email validation function
     private boolean isValidEmail(String email) {
         return Patterns.EMAIL_ADDRESS.matcher(email).matches();
     }
 
-    // Store login data in Firebase
     private void storeLoginData(String email, String password) {
         String userId = databaseReference.push().getKey();
         databaseReference.child(userId).setValue(new UserLogin(email, password))
@@ -78,12 +86,10 @@ public class LoginActivity extends AppCompatActivity {
                 .addOnFailureListener(e -> Toast.makeText(LoginActivity.this, "Failed to store data", Toast.LENGTH_SHORT).show());
     }
 
-    // Class to structure login data
     public static class UserLogin {
         public String email, password;
 
         public UserLogin() {
-            // Default constructor required for Firebase
         }
 
         public UserLogin(String email, String password) {
