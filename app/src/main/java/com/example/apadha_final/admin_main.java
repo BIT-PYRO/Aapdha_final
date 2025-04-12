@@ -15,6 +15,7 @@ public class admin_main extends AppCompatActivity {
     TextView approve;
     TextView reports;
 
+    private boolean isSettingsClicked = false; // ✅ Prevent multiple clicks
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,39 +27,38 @@ public class admin_main extends AppCompatActivity {
         approve = findViewById(R.id.app_res);
         reports = findViewById(R.id.report_Icon);
 
-        // Settings Button Click
-        imageButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        // ✅ Settings Button (Menu Icon)
+        imageButton.setOnClickListener(v -> {
+            if (!isSettingsClicked) {
+                isSettingsClicked = true;
                 Intent intent = new Intent(admin_main.this, admin_setting.class);
                 startActivity(intent);
             }
         });
 
-        // Live Disaster Alerts Click
-        alert.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(admin_main.this, admin_live.class);
-                startActivity(intent);
-            }
+        // Live Disaster Alerts
+        alert.setOnClickListener(v -> {
+            Intent intent = new Intent(admin_main.this, admin_live.class);
+            startActivity(intent);
         });
 
-        // Approve Resources Click
-        approve.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(admin_main.this, admin_resource.class);
-                startActivity(intent);
-            }
+        // Approve Resources
+        approve.setOnClickListener(v -> {
+            Intent intent = new Intent(admin_main.this, admin_resource.class);
+            startActivity(intent);
         });
 
-        reports.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(admin_main.this, admin_reports.class);
-                startActivity(intent);
-            }
+        // Reports
+        reports.setOnClickListener(v -> {
+            Intent intent = new Intent(admin_main.this, admin_reports.class);
+            startActivity(intent);
         });
+    }
+
+    // ✅ Reset flag when returning to this activity
+    @Override
+    protected void onResume() {
+        super.onResume();
+        isSettingsClicked = false;
     }
 }

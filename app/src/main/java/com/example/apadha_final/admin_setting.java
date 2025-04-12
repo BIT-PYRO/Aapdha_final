@@ -11,7 +11,7 @@ import androidx.appcompat.app.AppCompatActivity;
 public class admin_setting extends AppCompatActivity {
 
     ImageView back_button;
-    TextView profile;
+    TextView profile, tvLogout; // ✅ Add logout text view
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -19,25 +19,25 @@ public class admin_setting extends AppCompatActivity {
         setContentView(R.layout.activity_admin_setting);
 
         back_button = findViewById(R.id.back_button);
+        profile = findViewById(R.id.ivProfile);
+        tvLogout = findViewById(R.id.tvLogout); // ✅ Find by ID
 
-        back_button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(admin_setting.this, admin_main.class);
-                startActivity(intent);
-                finish(); // optional, closes current activity
-            }
+        back_button.setOnClickListener(v -> {
+            startActivity(new Intent(admin_setting.this, admin_main.class));
+            finish(); // Optional: finish this activity
         });
 
-        profile = findViewById(R.id.ivProfile);
+        profile.setOnClickListener(v -> {
+            startActivity(new Intent(admin_setting.this, admin_profile.class));
+            finish(); // Optional: finish this activity
+        });
 
-        profile.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(admin_setting.this, admin_profile.class);
-                startActivity(intent);
-                finish(); // optional, closes current activity
-            }
+        // ✅ Logout → Go to LoginActivity
+        tvLogout.setOnClickListener(v -> {
+            Intent intent = new Intent(admin_setting.this, LoginActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK); // Clear back stack
+            startActivity(intent);
+            finish(); // Finish current activity
         });
     }
 }
