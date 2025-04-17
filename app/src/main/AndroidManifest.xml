@@ -1,15 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
-    <!-- Permissions for location and network -->
+    <!-- Permissions -->
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
     <uses-permission android:name="android.permission.CAMERA" />
-
-
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <uses-feature
         android:name="android.hardware.camera"
@@ -24,6 +23,18 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AapadaSahayog"
         tools:targetApi="31">
+        <activity
+            android:name=".helpline"
+            android:exported="false" />
+        <activity
+            android:name=".SafetyTipsActivity"
+            android:exported="false" />
+        <activity
+            android:name=".FirstAidActivity"
+            android:exported="false" />
+        <activity
+            android:name=".NgoVolunteerActivity"
+            android:exported="false" />
         <activity
             android:name=".admin_reports"
             android:exported="false" />
@@ -56,7 +67,7 @@
             android:name=".MainActivity"
             android:exported="true"
             android:label="Aapada Sahayog"
-            android:theme="@style/Theme.AapadaSahayog" /> <!-- Settings page (for menu button) -->
+            android:theme="@style/Theme.AapadaSahayog" /> <!-- Settings page -->
         <activity
             android:name=".SettingsActivity"
             android:exported="false"
@@ -71,7 +82,7 @@
             android:name=".SignupActivity"
             android:exported="false"
             android:label="Signup"
-            android:theme="@style/Theme.AapadaSahayog" /> <!-- User details collection -->
+            android:theme="@style/Theme.AapadaSahayog" /> <!-- User details -->
         <activity
             android:name=".UserDetailsActivity"
             android:exported="false"
@@ -81,38 +92,40 @@
             android:name=".NewsActivity"
             android:exported="false"
             android:label="News"
-            android:theme="@style/Theme.AapadaSahayog" /> <!-- Emergency SOS screen -->
+            android:theme="@style/Theme.AapadaSahayog" /> <!-- Emergency SOS -->
         <activity
             android:name=".EmergencyActivity"
             android:exported="false"
             android:label="Emergency SOS"
-            android:theme="@style/Theme.AapadaSahayog" /> <!-- Contacts screen -->
+            android:theme="@style/Theme.AapadaSahayog" /> <!-- Contacts -->
         <activity
             android:name=".ContactsActivity"
             android:exported="false"
             android:label="Emergency Contacts"
-            android:theme="@style/Theme.AapadaSahayog" /> <!-- Resource request screen -->
+            android:theme="@style/Theme.AapadaSahayog" /> <!-- Resource request -->
         <activity
             android:name=".RequestResourcesActivity"
             android:exported="false"
             android:label="Request Resources"
-            android:theme="@style/Theme.AapadaSahayog" /> <!-- Latest reporting activity -->
+            android:theme="@style/Theme.AapadaSahayog" /> <!-- Latest reporting -->
         <activity
             android:name=".LatestReportingActivity"
             android:exported="false"
             android:label="Latest Report"
-            android:theme="@style/Theme.AapadaSahayog" /> <!-- Additional report activity -->
+            android:theme="@style/Theme.AapadaSahayog" /> <!-- Additional report -->
         <activity
             android:name=".ReportActivity"
             android:exported="false"
             android:label="Additional Report"
-            android:theme="@style/Theme.AapadaSahayog" /> <!-- ✅ Alternate MainActivity with reporting page trigger -->
+            android:theme="@style/Theme.AapadaSahayog" /> <!-- Alternate MainActivity with reporting trigger -->
         <activity
             android:name=".MainActivity2"
             android:exported="true"
             android:label="Aapada Sahayog (Report Mode)"
-            android:theme="@style/Theme.AapadaSahayog" />
-
+            android:theme="@style/Theme.AapadaSahayog" /> <!-- ✅ PdfViewerActivity added -->
+        <!-- <activity -->
+        <!-- android:name=".PdfViewerActivity" -->
+        <!-- android:exported="false" /> &lt;!&ndash; ✅ FileProvider for PDF access &ndash;&gt; -->
         <provider
             android:name="androidx.core.content.FileProvider"
             android:authorities="${applicationId}.provider"

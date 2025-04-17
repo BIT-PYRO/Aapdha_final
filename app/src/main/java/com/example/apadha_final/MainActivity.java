@@ -4,9 +4,7 @@ import android.Manifest;
 import android.app.AlertDialog;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
-import android.content.ActivityNotFoundException;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.widget.Button;
@@ -86,15 +84,20 @@ public class MainActivity extends AppCompatActivity {
         imgRescue.setOnClickListener(v -> redirectToLoginWithToast());
         imgMedical.setOnClickListener(v -> redirectToLoginWithToast());
 
-        // Info → Open PDFs
-        imgSafetyTips.setOnClickListener(v -> openPDF("safety_tips.pdf"));
-        imgDisasterHelpline.setOnClickListener(v -> openPDF("disaster_helpline.pdf"));
-        imgFirstAidTips.setOnClickListener(v -> openPDF("first_aid.pdf"));
-        imgNGOVolunteer.setOnClickListener(v -> openPDF("ngo_volunteer.pdf"));
+        // Info → Open Info Pages
+        imgSafetyTips.setOnClickListener(v -> openActivity(SafetyTipsActivity.class));
+        imgDisasterHelpline.setOnClickListener(v -> openActivity(helpline.class));
+        imgFirstAidTips.setOnClickListener(v -> openActivity(FirstAidActivity.class));
+        imgNGOVolunteer.setOnClickListener(v -> openActivity(NgoVolunteerActivity.class));
     }
 
     private void openActivity(Class<?> cls) {
         startActivity(new Intent(MainActivity.this, cls));
+    }
+
+    private void openInfoPage(Class<?> activityClass) {
+        Intent intent = new Intent(MainActivity.this, activityClass);
+        startActivity(intent);
     }
 
     private void showContactDialog(String title, String number) {
@@ -108,17 +111,6 @@ public class MainActivity extends AppCompatActivity {
     private void redirectToLoginWithToast() {
         Toast.makeText(this, "Please login first", Toast.LENGTH_SHORT).show();
         openActivity(LoginActivity.class);
-    }
-
-    private void openPDF(String fileName) {
-        try {
-            Intent intent = new Intent(Intent.ACTION_VIEW);
-            intent.setDataAndType(Uri.parse("file:///android_asset/" + fileName), "application/pdf");
-            intent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
-            startActivity(intent);
-        } catch (ActivityNotFoundException e) {
-            Toast.makeText(this, "No PDF viewer installed", Toast.LENGTH_SHORT).show();
-        }
     }
 
     private void createNotificationChannel() {

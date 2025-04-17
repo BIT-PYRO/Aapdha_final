@@ -9,6 +9,7 @@ import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -21,6 +22,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
+import java.io.ByteArrayOutputStream;
+
 public class ReportActivity extends AppCompatActivity {
 
     private static final int REQUEST_CAMERA_PERMISSION = 100;
@@ -31,6 +34,8 @@ public class ReportActivity extends AppCompatActivity {
     private VideoView videoPreview;
     private String selectedDisaster = "";
     private int pendingCameraAction = -1; // -1 = no action, 101 = photo, 102 = video
+    private ReportsDatabaseHelper dbHelper;
+    private Uri mediaUri = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,6 +44,8 @@ public class ReportActivity extends AppCompatActivity {
 
         imagePreview = findViewById(R.id.photoPreview);
         videoPreview = findViewById(R.id.videoPreview);
+
+        dbHelper = new ReportsDatabaseHelper(this);
 
         setupDisasterSelection();
 
@@ -64,7 +71,8 @@ public class ReportActivity extends AppCompatActivity {
             if (selectedDisaster.isEmpty()) {
                 Toast.makeText(this, "Please select a disaster type", Toast.LENGTH_SHORT).show();
             } else {
-                Toast.makeText(this, "Report submitted successfully!", Toast.LENGTH_SHORT).show();
+                // Store the report in SQLite
+                storeReportLocally();
             }
         });
     }
@@ -127,13 +135,38 @@ public class ReportActivity extends AppCompatActivity {
                 imagePreview.setImageBitmap(photo);
                 imagePreview.setVisibility(View.VISIBLE);
                 videoPreview.setVisibility(View.GONE);
+                mediaUri = getImageUri(photo);
             } else if (requestCode == REQUEST_VIDEO_CAPTURE && data.getData() != null) {
                 Uri videoUri = data.getData();
                 videoPreview.setVideoURI(videoUri);
                 videoPreview.setVisibility(View.VISIBLE);
                 videoPreview.start();
                 imagePreview.setVisibility(View.GONE);
+                mediaUri = videoUri;
             }
+        }
+    }
+
+    private Uri getImageUri(Bitmap bitmap) {
+        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream);
+        String path = MediaStore.Images.Media.insertImage(getContentResolver(), bitmap, "Report Image", null);
+        return Uri.parse(path);
+    }
+
+    private void storeReportLocally() {
+        if (mediaUri != null) {
+            String mediaPath = mediaUri.toString();
+            String userId = "user_id";  // Replace this with actual user ID from your app's authentication system
+            long rowId = dbHelper.addReport(selectedDisaster, mediaPath, userId);
+
+            if (rowId != -1) {
+                Toast.makeText(this, "Report submitted successfully!", Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(this, "Failed to submit the report", Toast.LENGTH_SHORT).show();
+            }
+        } else {
+            Toast.makeText(this, "No media selected", Toast.LENGTH_SHORT).show();
         }
     }
 
